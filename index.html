@@ -840,7 +840,12 @@
                 render();
             }
 
-            if ('serviceWorker' in navigator) {
+            // Netlify Deploy Preview 每个 PR 都有独立域名。预览环境不注册 Service Worker，
+            // 避免 Cache-First 缓存让审核者看到上一次提交的旧地图。
+            var isNetlifyDeployPreview = window.location.hostname.startsWith('deploy-preview-') &&
+                window.location.hostname.endsWith('.netlify.app');
+
+            if ('serviceWorker' in navigator && !isNetlifyDeployPreview) {
                 window.addEventListener('load', function () {
                     navigator.serviceWorker.register('./sw.js')
                         .then(function (reg) { reg.update().catch(function () { }); })
