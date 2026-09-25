@@ -1,0 +1,5 @@
+# CGo OpenMap is a zero-build static site.
+# Netlify serves the repository root directly and automatically creates
+# a Deploy Preview for pull requests once the repository is connected.
+[build]
+  publish = "."
